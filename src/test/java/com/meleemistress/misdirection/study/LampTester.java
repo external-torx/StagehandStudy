@@ -15,22 +15,35 @@
  */
 package com.meleemistress.misdirection.study;
 
+import java.lang.reflect.Proxy;
+
 import org.junit.Test;
+
+import com.meleemistress.misdirection.study.proxy.WallSocketInvocationHandler;
 
 /**
  * @author hparry
- *
+ * 
  */
 public class LampTester {
-    
+
     @Test
     public void testTheLamps() {
         TheAttic attic = new TheAttic();
         attic.throwALampOnThePile(new SingleChristmasLight());
         attic.throwALampOnThePile(new VeryNarrowSpotLight());
         attic.throwALampOnThePile(new VeryNarrowSpotLight());
-        
+
         attic.illuminate();
+    }
+
+    @Test
+    public void testTheWallSocket() {
+        WallSocketInvocationHandler handler = new WallSocketInvocationHandler();
+        Lamp lamp = (Lamp) Proxy.newProxyInstance(Lamp.class.getClassLoader(),
+                                                  new Class[] { Lamp.class },
+                                                  handler);
+        lamp.illuminate();
     }
 
 }
