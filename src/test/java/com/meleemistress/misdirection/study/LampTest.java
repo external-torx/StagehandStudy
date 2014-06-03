@@ -15,17 +15,16 @@
  */
 package com.meleemistress.misdirection.study;
 
+import static org.junit.Assert.assertTrue;
+
 import java.lang.reflect.Proxy;
 
 import org.junit.Test;
-
-import com.meleemistress.misdirection.study.proxy.WallSocketInvocationHandler;
-
 /**
  * @author hparry
  * 
  */
-public class LampTester {
+public class LampTest {
 
     @Test
     public void testTheLamps() {
@@ -39,11 +38,12 @@ public class LampTester {
 
     @Test
     public void testTheWallSocket() {
-        WallSocketInvocationHandler handler = new WallSocketInvocationHandler();
+        TestWallSocketInvocationHandler handler = new TestWallSocketInvocationHandler();
         Lamp lamp = (Lamp) Proxy.newProxyInstance(Lamp.class.getClassLoader(),
                                                   new Class[] { Lamp.class },
                                                   handler);
         lamp.illuminate();
+        assertTrue(handler.wasInvoked());
     }
 
 }
