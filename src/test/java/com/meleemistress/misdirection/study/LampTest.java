@@ -15,8 +15,9 @@
  */
 package com.meleemistress.misdirection.study;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 import org.junit.Test;
@@ -44,6 +45,15 @@ public class LampTest {
                                                   handler);
         lamp.illuminate();
         assertTrue(handler.wasInvoked());
+    }
+    
+    @Test
+    public void testCueing() throws NoSuchMethodException, SecurityException {
+        
+        Method method = Lamp.class.getMethod("illuminate", new Class<?>[] {});
+        Cue annotation = method.getAnnotation(Cue.class);
+        System.out.println(annotation.cue());
+        assertNotNull(annotation.cue());
     }
 
 }
